@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Invoice - Friends Forever</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        /* --- UPDATED: Background Image with dark overlay for readability --- */
+        body { 
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: 'Segoe UI', sans-serif; 
+            min-height: 100vh;
+        }
+        
+        /* --- ALL OTHER STYLES INTACT --- */
+        .navbar { 
+            background: linear-gradient(90deg, #5a2d82 0%, #8c4bcc 100%); 
+            border-bottom: 3px solid #ffd700; 
+            padding: 0.8rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            margin: 0 10px;
+            padding: 8px 15px !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.8) !important;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 5px;
+            left: 50%;
+            background-color: #ffd700;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after { width: 60%; }
+
+        .card { 
+            border: none; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            background: linear-gradient(45deg, #4b0082, #8c4bcc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #d1b9f0;
+        }
+
+        .form-control:focus {
+            border-color: #8c4bcc;
+            box-shadow: 0 0 0 0.25rem rgba(140, 75, 204, 0.25);
+        }
+        
+        .btn-primary-custom { 
+            background: linear-gradient(45deg, #5a2d82, #8c4bcc);
+            color: white; 
+            border: none; 
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-custom:hover { 
+            background: linear-gradient(45deg, #4b0082, #5a2d82);
+            color: white; 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(90, 45, 130, 0.3);
+        }
+
+        .total-section {
+            background: linear-gradient(90deg, #f8f9fa 0%, #f4edff 100%);
+            border-radius: 12px;
+            padding: 15px;
+            border-left: 5px solid #5a2d82;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/dashboard">
+            <i class="bi bi-lightning-charge-fill me-2"></i>Friends Forever Billing
+        </a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="/dashboard">Dashboard</a>
+            <a class="nav-link" href="/invoice_history">History</a>
+            <a class="nav-link text-warning" href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mb-5">
+    <div class="card p-4 p-md-5">
+        <h2 class="text-center mb-4 section-title">New Invoice Creation</h2>
+        
+        <form method="post">
+            <div class="row g-3 mb-4">
+               <div class="col-md-4 position-relative">
+    <label class="form-label fw-bold text-muted small text-uppercase">Customer Name</label>
+    <input name="name" id="custName" class="form-control form-control-lg" required placeholder="John Doe" autocomplete="off">
+    <div id="autocomplete-list" class="shadow-sm"></div>
+</div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold text-muted small text-uppercase">Phone Number</label>
+                    <input name="phone" class="form-control form-control-lg" required placeholder="+91 00000 00000">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold text-muted small text-uppercase">Address</label>
+                    <input name="address" class="form-control form-control-lg" required placeholder="City, State">
+                </div>
+            </div>
+
+            <div class="mb-4 p-3 bg-light rounded-3 d-flex align-items-center">
+                <label class="form-label fw-bold mb-0 me-4">Payment Mode:</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="payment_mode" id="cash" value="Cash" checked>
+                    <label class="form-check-label" for="cash">Cash</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="payment_mode" id="online" value="Online">
+                    <label class="form-check-label" for="online">Online / UPI</label>
+                </div>
+            </div>
+
+            <div class="table-responsive rounded-3 overflow-hidden border mb-3">
+                <table class="table table-hover align-middle mb-0" id="itemsTable">
+                    <thead class="table-light">
+                        <tr class="small text-uppercase text-muted">
+                            <th width="40%" class="ps-3">Description</th>
+                            <th>Qty</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                            <th class="text-end pe-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsBody">
+                        <tr>
+                            <td class="ps-3"><input name="desc[]" class="form-control" placeholder="Item/Service description" required></td>
+                            <td><input name="qty[]" type="number" class="form-control qty" value="1" oninput="calculate()"></td>
+                            <td><input name="rate[]" type="number" class="form-control rate" value="0" oninput="calculate()"></td>
+                            <td><input name="amt[]" class="form-control amt bg-light fw-bold" readonly value="0.00"></td>
+                            <td class="text-end pe-3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary btn-sm mb-4 px-3 rounded-pill" onclick="addRow()">
+                <i class="bi bi-plus-circle me-1"></i> Add Another Row
+            </button>
+
+            <div class="row justify-content-end mb-4">
+                <div class="col-md-5">
+                    <div class="total-section d-flex align-items-center justify-content-between">
+                        <span class="fs-5 fw-bold text-muted">Grand Total:</span>
+                        <div class="input-group w-50">
+                            <span class="input-group-text bg-transparent border-0 fw-bold fs-4">₹</span>
+                            <input id="total" name="total" class="form-control border-0 bg-transparent fw-bold fs-4 text-end" readonly value="0.00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary-custom w-100 py-3 fs-5 shadow-sm">
+                <i class="bi bi-file-earmark-pdf-fill me-2"></i>Generate & Save Invoice
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+function addRow() {
+    const tbody = document.getElementById("itemsBody");
+    const newRow = document.createElement("tr");
+    newRow.innerHTML = `
+        <td class="ps-3"><input name="desc[]" class="form-control" required></td>
+        <td><input name="qty[]" type="number" class="form-control qty" value="1" oninput="calculate()"></td>
+        <td><input name="rate[]" type="number" class="form-control rate" value="0" oninput="calculate()"></td>
+        <td><input name="amt[]" class="form-control amt bg-light fw-bold" readonly value="0.00"></td>
+        <td class="text-end pe-3"><button type="button" class="btn btn-link text-danger p-0" onclick="delRow(this)"><i class="bi bi-x-circle-fill fs-5"></i></button></td>
+    `;
+    tbody.appendChild(newRow);
+}
+
+function delRow(btn) {
+    btn.closest('tr').remove();
+    calculate();
+}
+
+function calculate() {
+    let quantities = document.getElementsByClassName("qty");
+    let rates = document.getElementsByClassName("rate");
+    let amounts = document.getElementsByClassName("amt");
+    let grandTotal = 0;
+
+    for (let i = 0; i < quantities.length; i++) {
+        let q = parseFloat(quantities[i].value) || 0;
+        let r = parseFloat(rates[i].value) || 0;
+        let rowTotal = q * r;
+        amounts[i].value = rowTotal.toFixed(2);
+        grandTotal += rowTotal;
+    }
+    document.getElementById("total").value = grandTotal.toFixed(2);
+}
+</script>
+
+<style>
+    #autocomplete-list {
+        position: absolute;
+        z-index: 1000;
+        width: 100%;
+        background: white;
+        border-radius: 0 0 10px 10px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    .suggestion-item {
+        padding: 12px 15px;
+        cursor: pointer;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background 0.2s;
+    }
+    .suggestion-item:hover {
+        background-color: #f4edff;
+        color: #5a2d82;
+    }
+</style>
+
+<script>
+const nameInput = document.getElementById('custName');
+const list = document.getElementById('autocomplete-list');
+
+nameInput.addEventListener('input', async (e) => {
+    const val = e.target.value;
+    list.innerHTML = '';
+    
+    if (val.length < 2) return; // Only search after 2 characters
+
+    try {
+        const resp = await fetch(`/get_customers?q=${val}`);
+        const customers = await resp.json();
+
+        customers.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'suggestion-item';
+            div.innerHTML = `<strong>${c.name}</strong> <span class="small text-muted float-end">${c.phone}</span>`;
+            
+            div.onclick = () => {
+                nameInput.value = c.name;
+                document.getElementsByName('phone')[0].value = c.phone;
+                document.getElementsByName('address')[0].value = c.address;
+                list.innerHTML = '';
+            };
+            list.appendChild(div);
+        });
+    } catch (err) {
+        console.error("Error fetching customers:", err);
+    }
+});
+
+// Hide list when clicking outside the input
+document.addEventListener('click', (e) => {
+    if (e.target !== nameInput) list.innerHTML = '';
+});
+</script>
+
+</body>
+</html>
