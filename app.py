@@ -343,11 +343,11 @@ def generate_pdf(inv, name, address, phone, desc, qty, rate, total, payment):
     c.setFillColorRGB(*brand_purple)
     c.setFont("Helvetica-Bold", 24)
     # Changed w/2 + 30 to w/2 + 60 for more breathing room
-    c.drawCentredString(w/2 + 60, h - 50, "FRIENDS FOREVER WELFARE TRUST")
+    c.drawCentredString(w/2 + 60, h - 50, "Demo Co In")
     
     c.setFillColorRGB(0, 0, 0)
     c.setFont("Helvetica", 10)
-    c.drawCentredString(w/2 + 60, h - 65, "Registration No: IV-1201-00124/2025")
+    c.drawCentredString(w/2 + 60, h - 65, "Registration No: 123456789-2026")
 
     # --- Contact Info ---
     c.setFont("Helvetica", 9)
@@ -433,4 +433,5 @@ def generate_pdf(inv, name, address, phone, desc, qty, rate, total, payment):
     c.save()
 
 if __name__ == "__main__":
+
     app.run(debug=True)
