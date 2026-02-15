@@ -1,10 +1,3 @@
-Here is a professional and GitHub-ready **README.md** for your project 👇
-(You can directly copy-paste this into your GitHub `README.md` file.)
-
----
-
-# 🚀 Flask-Invoice-Master
-
 ### Professional Billing & Management System
 
 A lightweight, secure, and feature-rich billing system built with **Python** and **Flask**.
