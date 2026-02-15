@@ -1,4 +1,4 @@
-### Professional Billing & Management System
+# Professional Billing & Management System
 
 A lightweight, secure, and feature-rich billing system built with **Python** and **Flask**.
 Designed for small businesses, startups, and trusts, this application automates invoice creation, provides real-time sales analytics, and generates professional PDF receipts.
